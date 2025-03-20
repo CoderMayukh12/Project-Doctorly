@@ -1,8 +1,9 @@
-// This file contains example functions to call your backend APIs.
+// For local development, if your backend is running on port 5000:
+const BASE_URL = "http://localhost:5000";
 
 export const signIn = async (email, password) => {
   try {
-    const response = await fetch("/api/signin", {
+    const response = await fetch(`${BASE_URL}/api/signin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -17,7 +18,7 @@ export const signIn = async (email, password) => {
 
 export const signUp = async (email, password) => {
   try {
-    const response = await fetch("/api/signup", {
+    const response = await fetch(`${BASE_URL}/api/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -37,7 +38,7 @@ export const uploadReports = async (files) => {
   });
 
   try {
-    const response = await fetch("/api/upload", {
+    const response = await fetch(`${BASE_URL}/api/upload`, {
       method: "POST",
       body: formData,
     });
