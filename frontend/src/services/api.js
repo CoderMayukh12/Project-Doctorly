@@ -1,49 +1,40 @@
-// For local development, if your backend is running on port 5000:
-const BASE_URL = "http://localhost:5000";
+import axios from "axios";
 
-export const signIn = async (email, password) => {
-  try {
-    const response = await fetch(`${BASE_URL}/api/signin`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
-    return await response.json();
-  } catch (error) {
-    console.error("Error signing in:", error);
-  }
-};
+const API_URL = "http://localhost:5000/api";
 
+// Sign Up API call (using axios)
 export const signUp = async (email, password) => {
   try {
-    const response = await fetch(`${BASE_URL}/api/signup`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
-    return await response.json();
+    const response = await axios.post(`${API_URL}/signup`, { email, password });
+    return response.data;
   } catch (error) {
     console.error("Error signing up:", error);
+    throw error;
   }
 };
 
-export const uploadReports = async (files) => {
-  const formData = new FormData();
-  files.forEach((file) => {
-    formData.append("reports", file);
-  });
-
+// Sign In API call (using axios)
+export const signIn = async (email, password) => {
   try {
-    const response = await fetch(`${BASE_URL}/api/upload`, {
+    const response = await axios.post(`${API_URL}/signin`, { email, password });
+    return response.data;
+  } catch (error) {
+    console.error("Error signing in:", error);
+    throw error;
+  }
+};
+
+// File Upload API call (using axios)
+export const uploadReports = async (formData) => {
+  try {
+    const response = await fetch(`${BASE_URL}/upload`, {
       method: "POST",
       body: formData,
     });
-    return await response.json();
+    const data = await response.json();
+    return data;
   } catch (error) {
     console.error("Error uploading reports:", error);
+    throw error;
   }
 };
